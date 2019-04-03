@@ -1,6 +1,6 @@
 pipeline {
 
-  agents none 
+  agent none 
 
   environment {
     registry = "docker.io/jagadesh1982"
