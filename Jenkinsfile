@@ -3,7 +3,7 @@ pipeline {
   agent none 
 
   environment {
-    registry = "docker.io/jagadesh1982"
+    registry = "docker.io/jagadesh1982/sample"
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
