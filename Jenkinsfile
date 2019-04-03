@@ -1,4 +1,12 @@
 pipeline {
+
+  environment {
+    registry = "docker.io/jagadesh1982"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
+
+
     agent {
         docker {
             image 'maven:3-alpine'
@@ -21,7 +29,26 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
+        stage('Building image') {
+          steps{
+             script {
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"
+            }
+          }
+        }
+
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    
+
+    stage('Deliver') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
             }
