@@ -59,13 +59,14 @@ stages {
            }
          }
        }
-       
-       stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
-        }  
- 
+
+
+   stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+    }
+        
 
   }
 
