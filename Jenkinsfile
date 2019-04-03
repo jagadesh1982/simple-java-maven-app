@@ -63,11 +63,12 @@ stages {
 
    stage('Remove Unused docker image') {
       steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+          script {
+            sh "docker rmi -f $registry:$BUILD_NUMBER"
+        }
       }
     }
         
 
   }
-
 }
