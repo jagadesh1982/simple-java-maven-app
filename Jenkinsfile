@@ -17,8 +17,10 @@ stages {
                   }
              }
        
-       steps {
+       steps { 
+                 
                 sh 'mvn -B -DskipTests clean package'
+                stash includes: 'target/*.jar', name: 'targetfiles'
             }     
        }
   
@@ -43,6 +45,8 @@ stages {
      stage('Building image') {
           steps{
              script {
+                unstash 'targetfiles'
+                sh 'ls -l -R'
                 dockerImage = docker.build registry + ":$BUILD_NUMBER"
             }
           }
